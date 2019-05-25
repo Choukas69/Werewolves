@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block body %}
+    <div class="alert alert-info" role="alert">
+        Pas encore de compte ? Cliquez <a href="" class="alert-link">ici</a> pour en créer un !
+    </div>
+
+    <div class="container">
+        <h1>Se connecter</h1>
+
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+
+        <form action="{{ path('app_login') }}" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Adresse mail</label>
+                <input type="email" name="email" value="{{ last_username }}" class="form-control"
+                       id="exampleInputEmail1" aria-describedby="emailHelp"
+                       placeholder="Entrez votre adresse mail" required>
+                <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre adresse mail à qui
+                    que ce soit.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Mot de passe</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                       placeholder="Mot de passe" required>
+                <a href="">J'ai oublié mon mot de passe</a>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="form-group custom-control custom-switch">
+                <input type="checkbox" name="_remember_me" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1">Se rappeller de moi</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-group">Se connecter</button>
+        </form>
+    </div>
+{% endblock %}
