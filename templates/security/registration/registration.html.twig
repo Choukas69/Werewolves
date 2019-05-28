@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="alert alert-info" role="alert">
+        Déjà inscrit ? Cliquez <a href="{{ path('app_login') }}" class="alert-link">ici</a> pour vous connecter !
+    </div>
+
+    <div class="container">
+        <h1>S'inscrire</h1>
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_row(form.email, {'attr': {'placeholder': 'Entrez une adresse mail'}}) }}
+            {{ form_row(form.pseudo, {'help': 'Votre pseudo doit contenir au moins 3 caractères alphanumériques.'}) }}
+            {{ form_row(form.password, {'help': 'Votre mot de passe doit contenir au moins 6 caractères alphanumériques.'}) }}
+            {{ form_row(form.confirmPassword) }}
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

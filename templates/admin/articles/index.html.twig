@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des articles</h1>
+
+        {% if articles %}
+            <table class="table table-hover table-bordered" id="dtBasicExample">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Portée</th>
+                    <th>Titre</th>
+                    <th>Actions</th>
+                    <th>Auteur</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.id }}</td>
+
+                        <td>
+                            {% if article.online %}
+                                <span class="text-success">En ligne</span>
+                            {% else %}
+                                <span class="text-danger">Hors ligne</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ article.title }}</td>
+
+                        <td>
+                            <a href="{{ path('admin_articles_edit', {'id': article.id}) }}" role="button" class="btn btn-dark">
+                                Modifier
+                            </a>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
+                                Supprimer
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Suppression d'un article</h5>
+
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            Vous êtes sur le point de supprimer un article. <br> Il ne sera pas récupérable.
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-dark" data-dismiss="modal">Fermer</button>
+                                            <a href="{{ path('admin_articles_remove', {'id': article.id}) }}" role="button"
+                                               class="btn btn-danger">Supprimer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>{{ article.author.pseudo }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigation pagination justify-content-end">
+                {{ knp_pagination_render(articles) }}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                Aucun article trouvé
+            </div>
+        {% endif %}
+
+        <a href="{{ path('admin_articles_create') }}" role="button" class="btn btn-dark">Ajouter un article</a>
+    </div>
+{% endblock %}

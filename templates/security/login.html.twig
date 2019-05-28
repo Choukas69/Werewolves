@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="alert alert-info" role="alert">
-        Pas encore de compte ? Cliquez <a href="" class="alert-link">ici</a> pour en créer un !
+        Pas encore de compte ? Cliquez <a href="{{ path('app_register') }}" class="alert-link">ici</a> pour en créer un !
     </div>
 
     <div class="container">
@@ -22,15 +22,11 @@
                 <input type="email" name="email" value="{{ last_username }}" class="form-control"
                        id="exampleInputEmail1" aria-describedby="emailHelp"
                        placeholder="Entrez votre adresse mail" required>
-                <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre adresse mail à qui
-                    que ce soit.
-                </small>
             </div>
 
             <div class="form-group">
                 <label for="exampleInputPassword1">Mot de passe</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1"
-                       placeholder="Mot de passe" required>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
                 <a href="">J'ai oublié mon mot de passe</a>
             </div>
 

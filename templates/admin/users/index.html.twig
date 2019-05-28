@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des utilisateurs</h1>
+
+        {% if users %}
+            <table class="table table-hover table-bordered" id="dtBasicExample">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Autorisation</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+
+                        <td>
+                            {% if not user.banned %}
+                                <span class="text-success">Autorisé</span>
+                            {% else %}
+                                <span class="text-danger">Banni</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ user.email }}</td>
+
+                        <td>
+                            <a href="{{ path('admin_users_edit', {'id': user.id}) }}" role="button" class="btn btn-dark">
+                                Modifier
+                            </a>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#removeModal">
+                                Supprimer
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Suppression d'un utilisateur</h5>
+
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            Vous êtes sur le point de supprimer un utilisateur. <br> Le compte ne sera pas récupérable.
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-dark" data-dismiss="modal">Fermer</button>
+                                            <a href="{{ path('admin_users_remove', {'id': user.id}) }}" role="button"
+                                               class="btn btn-danger">Supprimer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="navigation pagination justify-content-end">
+                {{ knp_pagination_render(users) }}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                Aucun utilisateur trouvé
+            </div>
+        {% endif %}
+
+        <a href="{{ path('admin_users_add') }}" role="button" class="btn btn-dark">Ajouter un utilisateur</a>
+    </div>
+{% endblock %}

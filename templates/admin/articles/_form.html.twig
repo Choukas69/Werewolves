@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.content, {'attr': {'rows': '10'}}) }}
+    {{ form_row(form.online) }}
+    <button type="submit" class="btn btn-dark">{{ button }}</button>
+{{ form_end(form) }}
